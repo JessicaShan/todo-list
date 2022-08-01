@@ -6,9 +6,9 @@ const Schema = mongoose.Schema
 const todoSchema = new Schema({
   name: {
     // 資料型別是字串
-    type: String
+    type: String,
     // 表示是必填欄位，不能為空白
-    required: ture
+    required: true,
   },
   done: {
     type: Boolean
