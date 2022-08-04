@@ -7,6 +7,9 @@ const exphbs = require('express-handlebars')
 // 引用 body-parser
 const bodyParser = require('body-parser')
 
+// U76 用 require 載入 method - override 
+const methodOverride = require('method-override')
+
 // 載入 Todo model
 const Todo = require('./models/todo')
 
@@ -31,6 +34,9 @@ app.set('view engine', 'hbs')
 
 // 用 app.use 規定每一筆請求都需要透過 body-parser 進行前置處理
 app.use(bodyParser.urlencoded({ extended: true }))
+
+// U76 設定每一筆請求都會透過 methodOverride 進行前置處理
+app.use(methodOverride('_method'))
 
 app.get('/', (req, res) => {
   //  res.render('index')  //因為新增讀取所有todo,所以這行要修改如下
@@ -65,6 +71,7 @@ app.get('/todos/:id', (req, res) => {  // 用 req.params.id 拿到資料。
 
 // "修改"特定一筆資料的路由設定
 app.get('/todos/:id/edit', (req, res) => {
+  //app.get('/todos/:id/edit', (req, res) => {  // Restful 前
   const id = req.params.id
   return Todo.findById(id)
     .lean()
@@ -73,7 +80,8 @@ app.get('/todos/:id/edit', (req, res) => {
 })
 
 // 資料庫修改特定 todo 的資料
-app.post('/todos/:id/edit', (req, res) => {
+app.put('/todos/:id', (req, res) => {
+  // app.post('/todos/:id/edit', (req, res) => {     // Restful 前
   const id = req.params.id
   const { name, isDone } = req.body
   return Todo.findById(id)
@@ -87,7 +95,8 @@ app.post('/todos/:id/edit', (req, res) => {
 })
 
 //刪除todo 的資料
-app.post('/todos/:id/delete', (req, res) => {
+app.delete('/todos/:id', (req, res) => {
+  // app.post('/todos/:id/delete', (req, res) => {    // Restful 前
   const id = req.params.id
   return Todo.findById(id)
     .then(todo => todo.remove())
