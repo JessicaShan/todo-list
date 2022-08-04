@@ -10,8 +10,12 @@ const todoSchema = new Schema({
     // 表示是必填欄位，不能為空白
     required: true,
   },
-  done: {
-    type: Boolean
+  // done: {
+  //   type: Boolean
+  // }
+  isDone: {
+    type: Boolean,
+    default: false,
   }
 })
 
