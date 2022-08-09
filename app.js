@@ -1,5 +1,5 @@
 const express = require('express')
-const mongoose = require('mongoose')
+// const mongoose = require('mongoose')
 
 // 樣板引擎指定為 Handlebars
 const exphbs = require('express-handlebars')
@@ -11,25 +11,27 @@ const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 
 // 載入 Todo model
-const Todo = require('./models/todo')
+// const Todo = require('./models/todo')
 
 // 引用路由器
 const routes = require('./routes')
 
 const app = express()
-// console.log(process.env.MONGODB_URI)
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+// // console.log(process.env.MONGODB_URI)
+// mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-// 取得資料庫連線狀態
-const db = mongoose.connection
-// 連線異常
-db.on('error', () => {
-  console.log('mongodb error!')
-})
-// 連線成功
-db.once('open', () => {
-  console.log('mongodb connected!')
-})
+// // 取得資料庫連線狀態
+// const db = mongoose.connection
+// // 連線異常
+// db.on('error', () => {
+//   console.log('mongodb error!')
+// })
+// // 連線成功
+// db.once('open', () => {
+//   console.log('mongodb connected!')
+// })
+
+require('./config/mongoose')
 
 // 樣板引擎指定為 Handlebars 的程式碼
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
