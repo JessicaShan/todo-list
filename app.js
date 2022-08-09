@@ -31,6 +31,10 @@ const app = express()
 //   console.log('mongodb connected!')
 // })
 
+// 如果在 Heroku 環境則使用 process.env.PORT
+// 否則為本地環境，使用 3000 
+const PORT = process.env.PORT || 3000
+
 require('./config/mongoose')
 
 // 樣板引擎指定為 Handlebars 的程式碼
@@ -112,6 +116,10 @@ app.use(routes)
 //     .catch(error => console.log(error))
 // })
 
-app.listen(3000, () => {
-  console.log(`App is running on http://localhost:3000`)
+// app.listen(3000, () => {
+//   console.log(`App is running on http://localhost:3000`)
+// })
+// 設定應用程式監聽的埠號
+app.listen(PORT, () => {
+  console.log(`App is running on http://localhost:${PORT}`)
 })
